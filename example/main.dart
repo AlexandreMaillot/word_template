@@ -1,41 +1,11 @@
-# docx_template_dart
-A Docx template engine
+import 'dart:io';
 
-Generates docx from template file.
+import 'package:word_template/docx_template.dart';
 
-In order to use the library, you need to learn how to insert and edit content control tags in Microsoft Word.
-LibreOffice and other office programs are not supported because they do not have a content control tag system.
-
-To do this, go to the project repository and download the template file [template.docx](https://github.com/PavelS0/docx_template_dart/blob/master/template.docx)
-
-Then open the file in Microsoft Word, go to the program settings and enable Developer mode. You may need to restart the program. After that, the developer tab will be available.
-
-In order to make the tags visible, you need to enable "design mode" on the developer tab, to view and edit the tag parameters, you need select tag, then click "properties" button on developer tab.
-
-To create a tag, you need to use the "Aa" buttons on the developer tab, clicking on the button will open a window where:
-the TAG field can be one from the following list: list, table, text, plain, img
-the TITLE field is the name of the tag, which will be passed to constructors of the Content classes
-
-For example:
-If we set the tag equal to 'list' and the title equal to 'cars', then we must use the corresponding 
-```ListContent ('cars', [*here contents*])```
-
-For the 'text' tag and the title equal to 'block_name' we use:
-```TextContent('block_name', 'Example text')```
-etc.
-
-
-List of supported tags:
-+ list - a list, which can contain the following tags: text, plain
-+ table - table row
-+ text - a simple text field
-+ plain - a block that can contain text, tables, images, lists, which can be repeated several times if you wrap it in a list tag
-+ img - block with a picture, can be used in text or inside tables
-
-
-# Example
-
-```
+///
+/// Read file template.docx, produce it and save
+///
+void main() async {
   final f = File("template.docx");
   final docx = await DocxTemplate.fromBytes(await f.readAsBytes());
 
@@ -52,7 +22,7 @@ List of supported tags:
   final testFileContent = await File('test.jpg').readAsBytes();
 
   final listNormal = ['Foo', 'Bar', 'Baz'];
-  final listBold = ['ooF', 'raB', 'zaB'];
+  final listBold = ['ooFPlop', 'raB', 'zaB'];
 
   final contentList = <Content>[];
 
@@ -66,8 +36,8 @@ List of supported tags:
     contentList.add(c);
   }
 
-  Content c = Content();
-  c
+  Content content = Content();
+  content
     ..add(TextContent("docname", "Simple docname"))
     ..add(TextContent("passport", "Passport NE0323 4456673"))
     ..add(TableContent("table", [
@@ -137,7 +107,7 @@ List of supported tags:
     ..add(TextContent('multilineText2', 'line 1\nline 2\n line 3'))
     ..add(ImageContent('img', testFileContent));
 
-  final d = await docx.generate(c);
-  final of = File('generated.docx');
-  if (d != null) await of.writeAsBytes(d);
-```
+  final docGenerated = await docx.generate(content);
+  final fileGenerated = File('generated.docx');
+  if (docGenerated != null) await fileGenerated.writeAsBytes(docGenerated);
+}
