@@ -1,7 +1,7 @@
 part of docx_view;
 
-typedef bool Check(XmlElement n);
-typedef void OnFound(XmlElement e);
+typedef Check = bool Function(XmlElement n);
+typedef OnFound = void Function(XmlElement e);
 
 class View<T extends Content?> extends XmlElement {
   Map<String, List<View>>? sub;

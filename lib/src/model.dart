@@ -6,7 +6,7 @@ import 'dart:collection';
 class Content extends MapBase<String, Content> {
   String key;
   Map<String, Content> sub = {};
-  Content([this.key = '', Map<String, Content>? sub]) : this.sub = sub ?? {};
+  Content([this.key = '', Map<String, Content>? sub]) : sub = sub ?? {};
 
   @override
   Content? operator [](Object? key) {

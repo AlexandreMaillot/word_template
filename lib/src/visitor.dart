@@ -159,19 +159,16 @@ class XmlCopyVisitor with XmlVisitor {
 
   @override
   XmlName visitName(XmlName name) {
-    // print('10');
     return XmlName.fromString(name.qualified);
   }
 
   @override
   XmlProcessing visitProcessing(XmlProcessing node) {
-    print('11');
     return XmlProcessing(node.target, node.text);
   }
 
   @override
   XmlText visitText(XmlText node) {
-    // print('12');
     return XmlText(node.text);
   }
 }

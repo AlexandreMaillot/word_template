@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:archive/archive.dart';
 import 'package:word_template/docx_template.dart';
 import 'package:word_template/src/view_manager.dart';
@@ -12,7 +10,7 @@ class DocxTemplateException implements Exception {
   DocxTemplateException(this.message);
 
   @override
-  String toString() => this.message;
+  String toString() => message;
 }
 
 ///
@@ -86,10 +84,6 @@ class DocxTemplate {
     vm.produce(c);
     _manager.updateArch();
     final enc = ZipEncoder();
-
-    print(_manager.arch[1]);
-
-    final fileGenerated = File('.rels').writeAsBytes(_manager.arch[1].content);
 
     return enc.encode(_manager.arch);
   }
